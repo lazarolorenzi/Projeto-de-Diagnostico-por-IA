@@ -2,7 +2,7 @@
 
 ## Descrição
 
-O **SintomaTech** é uma aplicação web desenvolvida para registrar sintomas, sugerir possíveis doenças com base nesses sintomas e gerar relatórios detalhados para auxiliar médicos. O sistema utiliza tecnologia avançada para comparar sintomas e identificar doenças, oferecendo uma ferramenta intuitiva e eficaz para diagnóstico.
+O **SintomaTech** é uma aplicação web desenvolvida para registrar sintomas, sugerir possíveis doenças com base nesses sintomas e gerar relatórios detalhados para auxiliar médicos. O sistema utiliza tecnologia avançada para comparar sintomas e identificar possiveis doenças, oferecendo uma ferramenta intuitiva e eficaz para diagnóstico.
 
 ## Tecnologias Utilizadas
 
