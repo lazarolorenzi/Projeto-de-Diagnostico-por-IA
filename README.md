@@ -68,10 +68,6 @@ O **SintomaTech** é uma aplicação web desenvolvida para registrar sintomas, s
 
 ## Modelagem do Banco de Dados
 
-**Diagrama Entidade-Relacionamento:**
-
-![Modelo de Dados](https://via.placeholder.com/800x600.png) *(Nota: O diagrama deve ser criado usando uma ferramenta de modelagem, como draw.io ou similar)*
-
 **Entidades e Relacionamentos:**
 
 - **Usuário (User)**
