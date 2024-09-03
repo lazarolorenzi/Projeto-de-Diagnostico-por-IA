@@ -72,6 +72,8 @@ O **SintomaTech** é uma aplicação web desenvolvida para registrar sintomas, s
 
 - **Usuário (User)**
   - `id` (Chave Primária)
+  - `login`
+  - `senha`
   - `nome`
   - `idade`
 
