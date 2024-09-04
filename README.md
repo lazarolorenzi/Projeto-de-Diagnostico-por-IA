@@ -11,7 +11,7 @@ O **SintomaTech** é uma aplicação web desenvolvida para registrar sintomas, s
   - **TypeScript**: Superset do JavaScript para tipagem estática.
   - **TypeORM**: ORM para manipulação do banco de dados.
   - **Express**: Framework para criação de APIs RESTful.
-  - **SQLite**: Banco de dados relacional leve para desenvolvimento.
+  - **Postgres**: Banco de dados relacional leve para desenvolvimento.
 
 - **Frontend (opcional):**
   - **React** ou **Vue.js**: Bibliotecas para criar interfaces de usuário interativas.
