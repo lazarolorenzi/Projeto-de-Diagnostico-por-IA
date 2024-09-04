@@ -131,18 +131,5 @@ O **SintomaTech** é uma aplicação web desenvolvida para registrar sintomas, s
 
 ## Documentação da API com Postman
 
-1. **Criar Coleção no Postman:**
-   - Adicione uma nova coleção para o projeto.
-
-2. **Adicionar Requisições:**
-   - **POST /sintomas**: Para registrar sintomas.
-   - **GET /sintomas**: Para obter todos os sintomas.
-   - **POST /diagnostico**: Para receber sugestões de doenças e identificar a mais semelhante.
-   - **POST /relatorios**: Para gerar relatórios.
-
 3. **Definir Exemplos e Testes:**
-   - Adicione exemplos de payloads e respostas para cada endpoint.
-   - Configure testes básicos para validar a resposta da API.
 
-4. **Exportar e Compartilhar:**
-   - Exporte a coleção e compartilhe o link com a equipe ou stakeholders.
