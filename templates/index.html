@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Diagnóstico Médico</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center">Sistema Especialista para Diagnóstico Médico</h2>
+        <form action="/diagnostico" method="POST">
+            <div class="form-group">
+                <label for="sintomas">Selecione seus sintomas:</label>
+                <input class="form-control mb-3" id="filtroSintomas" type="text" placeholder="Pesquise um sintoma...">
+                <div id="listaSintomas" style="max-height: 300px; overflow-y: auto;">
+                    {% for sintoma in todos_sintomas %}
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="sintomas" value="{{ sintoma }}" id="{{ sintoma }}">
+                            <label class="form-check-label" for="{{ sintoma }}">{{ sintoma }}</label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Obter Diagnóstico</button>
+        </form>
+    </div>
+    <script>
+        // Filtragem de sintomas com JavaScript
+        document.getElementById('filtroSintomas').addEventListener('input', function() {
+            let filtro = this.value.toLowerCase();
+            let sintomas = document.querySelectorAll('#listaSintomas .form-check');
+            sintomas.forEach(function(sintoma) {
+                let label = sintoma.querySelector('label').innerText.toLowerCase();
+                if (label.includes(filtro)) {
+                    sintoma.style.display = '';
+                } else {
+                    sintoma.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
