@@ -129,7 +129,7 @@ Clonar o Repositório: Clone o repositório do projeto para sua máquina local:
 
 
 ```sh
-git clone https://github.com/lazarolorenzi/Projeto-de-Diagnostico.git
+git clone https://github.com/lazarolorenzi/Projeto-de-Diagnostico-por-IA.git
 ```
 Entre no diretório do projeto:
 ```sh
