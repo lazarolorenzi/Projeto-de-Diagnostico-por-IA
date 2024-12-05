@@ -73,21 +73,79 @@ Algumas doenças apresentavam sintomas muito semelhantes, levando à redundânci
 
 ---
 
-## 🔚 Conclusão
+## 🛠️ 5. Bibliotecas e Ferramentas Utilizadas
 
-O sistema desenvolvido é um exemplo clássico de um **sistema especialista**, utilizando regras de produção para inferir possíveis doenças a partir dos sintomas fornecidos pelo usuário. Embora o sistema não seja treinável, ele é **altamente explicável** e proporciona **confiança e transparência** nas inferências, uma vez que o processo lógico é explícito e rastreável.
+Para a construção do sistema especialista, utilizamos as seguintes bibliotecas e ferramentas:
 
-Este sistema possui algumas limitações de adaptabilidade, mas oferece um ponto de partida sólido para problemas que requerem uma abordagem determinística e rastreável. Para futuras melhorias, recomenda-se integrar um **componente de aprendizado de máquina** para tornar o sistema mais adaptável a novos dados.
-
----
-
-### 💡 Recomendações Finais
-- **Integração com Machine Learning**: A integração com algoritmos de aprendizado pode fornecer uma camada adaptativa, ajustando dinamicamente algumas regras com base em novas informações.
-- **Expansão do Dataset**: Ampliar a base de conhecimento para incluir mais doenças e sintomas críticos pode melhorar a capacidade do sistema de diagnosticar casos mais complexos.
+- **Python 3.9**: Linguagem principal para implementação do sistema.
+- **Experta**: Biblioteca Python para criar sistemas especialistas baseados em regras. Utilizamos Experta para definir o motor lógico do sistema e as regras de inferência.
+- **Flask**: Utilizado para criar a interface web do sistema, permitindo a interação do usuário através do navegador.
+- **Bootstrap 4.5**: Framework CSS utilizado para estilizar as páginas web, proporcionando uma interface amigável e responsiva.
+- **CSV**: O dataset foi armazenado em formato CSV, e a biblioteca **csv** do Python foi utilizada para manipular esses dados.
 
 ---
 
-#### 📌 Contatos:
-Para mais informações sobre o desenvolvimento ou para visualizar o código completo, consulte o repositório no GitHub (link do repositório do projeto).
+## 🛠️ 6. Tutorial de Execução do Projeto
 
----
+### 6.1. Pré-requisitos
+
+- **Python 3.9**: Certifique-se de que o Python 3.9 está instalado. Para verificar a versão do Python, execute:
+  ```sh
+  python --version
+Se precisar instalá-lo, acesse o site oficial do Python.
+
+Pip: Certifique-se de que o pip está instalado para gerenciar pacotes do Python. Para verificar:
+```sh
+pip --version
+```
+Caso não esteja instalado, siga as instruções na página do Pip.
+6.2. Instalar as Dependências
+Criar um Ambiente Virtual (opcional): Crie um ambiente virtual para isolar as dependências do projeto:
+
+
+```sh
+python -m venv env
+```
+Ative o ambiente virtual:
+
+Windows:
+
+```.\env\Scripts\activate
+```
+Linux/Mac:
+
+```sh
+source env/bin/activate
+
+```
+Instalar as Bibliotecas Necessárias: Execute o comando abaixo para instalar as dependências:
+
+
+```sh
+pip install -r requirements.txt
+```
+Clonar o Repositório: Clone o repositório do projeto para sua máquina local:
+
+
+```sh
+git clone <link-do-repositorio>
+```
+Entre no diretório do projeto:
+```sh
+cd nome-do-projeto
+
+```
+Executar o Servidor Flask: Execute o script app.py para iniciar o servidor local:
+
+
+```sh
+python app.py
+```
+Se o servidor estiver rodando corretamente, você verá uma mensagem indicando que o Flask está ativo em http://127.0.0.1:5000/.
+
+Acessar o Sistema: Abra o navegador e vá até http://127.0.0.1:5000/ para acessar a interface do sistema.
+
+###🔚 Conclusão
+O sistema desenvolvido é um exemplo clássico de um sistema especialista, utilizando regras de produção para inferir possíveis doenças a partir dos sintomas fornecidos pelo usuário. Embora o sistema não seja treinável, ele é altamente explicável e proporciona confiança e transparência nas inferências, uma vez que o processo lógico é explícito e rastreável.
+
+Este sistema possui algumas limitações de adaptabilidade, mas oferece um ponto de partida sólido para problemas que requerem uma abordagem determinística e rastreável. Para futuras melhorias, recomenda-se integrar um componente de aprendizado de máquina para tornar o sistema mais adaptável a novos dados.
