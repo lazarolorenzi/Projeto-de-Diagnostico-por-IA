@@ -10,7 +10,7 @@ Este relatório detalha o desenvolvimento de um sistema especialista para diagn�
 A abordagem escolhida para este trabalho foi a de um **Sistema Especialista**, um tipo de IA lógica baseada em sistemas de regras. Optamos por essa abordagem por algumas razões principais:
 
 ### ✔️ **Natureza do Problema**:
-O diagnóstico médico é um processo sistemático, e os médicos geralmente seguem protocolos lógicos para relacionar sintomas a doenças. Um sistema especialista é capaz de formalizar esse processo usando regras específicas.
+O diagnóstico médico é um processo sistemático, e os médicos geralmente seguem protocolos lógicos para relacionar sintomas a doenças. Um sistema especialista é capaz de formalizar esse processo usando regras específicas (Não torna desnecessaria a opnião do médico).
 
 ### ✔️ **Transparência e Explicabilidade**:
 Sistemas especialistas são altamente **explicáveis**. Cada inferência é baseada em regras explícitas, e isso permite que o usuário compreenda como um diagnóstico foi alcançado. Isso é fundamental na área médica, onde a confiança no diagnóstico e a rastreabilidade das decisões são importantes.
@@ -129,15 +129,14 @@ Clonar o Repositório: Clone o repositório do projeto para sua máquina local:
 
 
 ```sh
-git clone <link-do-repositorio>
+git clone https://github.com/lazarolorenzi/Projeto-de-Diagnostico.git
 ```
 Entre no diretório do projeto:
 ```sh
-cd nome-do-projeto
+cd Projeto-de-Diagnostico
 
 ```
 Executar o Servidor Flask: Execute o script app.py para iniciar o servidor local:
-
 
 ```sh
 python app.py
@@ -149,4 +148,4 @@ Acessar o Sistema: Abra o navegador e vá até http://127.0.0.1:5000/ para acess
 ###🔚 Conclusão
 O sistema desenvolvido é um exemplo clássico de um sistema especialista, utilizando regras de produção para inferir possíveis doenças a partir dos sintomas fornecidos pelo usuário. Embora o sistema não seja treinável, ele é altamente explicável e proporciona confiança e transparência nas inferências, uma vez que o processo lógico é explícito e rastreável.
 
-Este sistema possui algumas limitações de adaptabilidade, mas oferece um ponto de partida sólido para problemas que requerem uma abordagem determinística e rastreável. Para futuras melhorias, recomenda-se integrar um componente de aprendizado de máquina para tornar o sistema mais adaptável a novos dados.
+Este sistema possui algumas limitações de adaptabilidade, mas oferece um ponto de partida sólido para problemas que requerem uma abordagem determinística e rastreável. O sistema sera adptado para ser incluso em um novo projeto mobile https://github.com/lazarolorenzi/SintomaTech o projeto esta inicialmente privado mais sera publicado assim que for feita a adptação do modelo.
