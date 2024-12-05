@@ -145,7 +145,9 @@ Se o servidor estiver rodando corretamente, você verá uma mensagem indicando q
 
 Acessar o Sistema: Abra o navegador e vá até http://127.0.0.1:5000/ para acessar a interface do sistema.
 
-###🔚 Conclusão
+---
+
+## 7. 🔚 Conclusão 
 O sistema desenvolvido é um exemplo clássico de um sistema especialista, utilizando regras de produção para inferir possíveis doenças a partir dos sintomas fornecidos pelo usuário. Embora o sistema não seja treinável, ele é altamente explicável e proporciona confiança e transparência nas inferências, uma vez que o processo lógico é explícito e rastreável.
 
 Este sistema possui algumas limitações de adaptabilidade, mas oferece um ponto de partida sólido para problemas que requerem uma abordagem determinística e rastreável. O sistema sera adptado para ser incluso em um novo projeto mobile https://github.com/lazarolorenzi/SintomaTech o projeto esta inicialmente privado mais sera publicado assim que for feita a adptação do modelo.
