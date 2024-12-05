@@ -110,7 +110,8 @@ Ative o ambiente virtual:
 
 Windows:
 
-```.\env\Scripts\activate
+```
+.\env\Scripts\activate
 ```
 Linux/Mac:
 
