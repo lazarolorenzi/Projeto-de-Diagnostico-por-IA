@@ -10,7 +10,7 @@ Este relatório detalha o desenvolvimento de um sistema especialista para diagn�
 A abordagem escolhida para este trabalho foi a de um **Sistema Especialista**, um tipo de IA lógica baseada em sistemas de regras. Optamos por essa abordagem por algumas razões principais:
 
 ### ✔️ **Natureza do Problema**:
-O diagnóstico médico é um processo sistemático, e os médicos geralmente seguem protocolos lógicos para relacionar sintomas a doenças. Um sistema especialista é capaz de formalizar esse processo usando regras específicas (Não torna desnecessaria a opnião do médico).
+O diagnóstico médico é um processo sistemático, e os médicos geralmente seguem protocolos lógicos para relacionar sintomas a doenças. Um sistema especialista é capaz de formalizar esse processo usando regras específicas (Não torna desnecessária a opnião do médico).
 
 ### ✔️ **Transparência e Explicabilidade**:
 Sistemas especialistas são altamente **explicáveis**. Cada inferência é baseada em regras explícitas, e isso permite que o usuário compreenda como um diagnóstico foi alcançado. Isso é fundamental na área médica, onde a confiança no diagnóstico e a rastreabilidade das decisões são importantes.
