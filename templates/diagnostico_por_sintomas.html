@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Selecionar Sintomas</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <h4 class="text-center">Selecione seus sintomas para obter um diagnóstico:</h4>
+        <form action="/resultado_diagnostico" method="POST">
+            <div class="form-group">
+                <input class="form-control mb-3" id="filtroSintomas" type="text" placeholder="Pesquise um sintoma...">
+                <div id="listaSintomas" style="max-height: 300px; overflow-y: auto;">
+                    {% for sintoma in todos_sintomas %}
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="sintomas" value="{{ sintoma }}" id="{{ sintoma }}">
+                            <label class="form-check-label" for="{{ sintoma }}">{{ sintoma }}</label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Obter Diagnóstico</button>
+        </form>
+    </div>
+    
+    <div class="text-center mt-3">
+        <a href="/" class="btn btn-secondary">Voltar ao Início</a>
+    </div>
+
+    <script>
+        document.getElementById('filtroSintomas').addEventListener('input', function() {
+            let filtro = this.value.toLowerCase();
+            let sintomas = document.querySelectorAll('#listaSintomas .form-check');
+            sintomas.forEach(function(sintoma) {
+                let label = sintoma.querySelector('label').innerText.toLowerCase();
+                if (label.includes(filtro)) {
+                    sintoma.style.display = '';
+                } else {
+                    sintoma.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

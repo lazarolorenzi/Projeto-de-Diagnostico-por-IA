@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Resultado da Verificação de Diagnóstico</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <h4 class="text-center">Resultado da Verificação</h4>
+        <p class="text-center">{{ resultado }}</p>
+        
+        {% if possiveis_doencas and resultado != "Os sintomas fornecidos correspondem totalmente aos sintomas conhecidos de {{ doenca }}." %}
+            <h5 class="text-center mt-4">Possíveis Doenças com os Sintomas Selecionados:</h5>
+            <ul class="list-group mt-3">
+                {% for doenca, porcentagem in possiveis_doencas %}
+                    <li class="list-group-item">{{ doenca }}: {{ porcentagem }}%</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        
+        <div class="text-center mt-3">
+            <a href="/" class="btn btn-secondary">Voltar ao Início</a>
+        </div>
+    </div>
+</body>
+</html>

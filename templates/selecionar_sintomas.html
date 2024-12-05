@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Engenharia Reversa - Selecionar Sintomas</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <h4 class="text-center">Sintomas da doença "{{ doenca }}":</h4>
+        <form action="/verificar_diagnostico" method="POST">
+            <input type="hidden" name="doenca" value="{{ doenca }}">
+            <div class="form-group">
+                {% if sintomas %}
+                    <div id="listaSintomas" style="max-height: 300px; overflow-y: auto;">
+                        {% for sintoma in sintomas %}
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="sintomas" value="{{ sintoma }}" id="{{ sintoma }}">
+                                <label class="form-check-label" for="{{ sintoma }}">{{ sintoma }}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-center">Nenhum sintoma disponível para esta doença.</p>
+                {% endif %}
+            </div>
+            <button type="submit" class="btn btn-primary">Verificar Diagnóstico</button>
+        </form>
+        <div class="text-center mt-3">
+            <a href="/" class="btn btn-secondary">Voltar ao Início</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Engenharia Reversa - Selecionar Doença</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <h4 class="text-center">Selecione uma possível doença e verifique os sintomas:</h4>
+        <form action="/selecionar_sintomas" method="POST">
+            <div class="form-group">
+                <label for="doenca">Doença:</label>
+                <select id="doenca" name="doenca" class="form-control">
+                    {% if todas_doencas %}
+                        {% for doenca in todas_doencas %}
+                            <option value="{{ doenca }}">{{ doenca }}</option>
+                        {% endfor %}
+                    {% else %}
+                        <option value="">Nenhuma doença disponível no momento</option>
+                    {% endif %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-secondary">Próximo</button>
+        </form>
+        <div class="text-center mt-3">
+            <a href="/" class="btn btn-secondary">Voltar ao Início</a>
+        </div>
+    </div>
+</body>
+</html>

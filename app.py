@@ -1,13 +1,36 @@
-
 import csv
 from experta import *
 from flask import Flask, render_template, request
 
-# Código em Python para um sistema especialista que faz diagnóstico baseado em sintomas usando Experta (baseado em sistemas especialistas)
+# Definindo o caminho do dataset, na hora que for testar mude para o seu caminho do dataset coloque o caminho desda raiz, algumas vezes ele n encontra se colocar de forma simples !! exp CAMINHO_CSV = 'dataset_sintomas.csv'
+CAMINHO_CSV = 'E:\IA especialista para Sintomas\Projeto-de-Diagnostico\dataset_sintomas.csv'
 
-# Definindo uma variável global para o caminho do dataset
-CAMINHO_CSV = 'dataset_sintomas.csv'
+# Carregar os fatos sobre doenças e sintomas do CSV
+def carregar_fatos(caminho):
+    fatos = {}
+    sintomas_criticos = {}
+    with open(caminho, newline='', encoding='utf-8') as csvfile:
+        reader = csv.reader(csvfile)
+        next(reader)  # Pular o cabeçalho
+        for row in reader:
+            doenca, sintomas_str, sintoma_critico = row
+            sintomas = [s.strip() for s in sintomas_str.split(';')]
+            fatos[doenca] = sintomas
+            sintomas_criticos[doenca] = [sintoma_critico.strip()]
+    return fatos, sintomas_criticos
 
+# Inicializando o Flask app
+app = Flask(__name__)
+
+# Carregar fatos do CSV
+fatos, sintomas_criticos = carregar_fatos(CAMINHO_CSV)
+
+# Criar uma lista de sintomas para o formulário
+todos_sintomas = sorted({sintoma for sintomas in fatos.values() for sintoma in sintomas})
+todas_doencas = sorted(fatos.keys())
+print("Doenças carregadas:", todas_doencas)  # Verificação para garantir que doenças foram carregadas
+
+# Motor de Inferência 
 class Diagnostico(KnowledgeEngine):
     @DefFacts()
     def _initial_action(self):
@@ -43,35 +66,20 @@ class Diagnostico(KnowledgeEngine):
         # Declara o diagnóstico com a porcentagem calculada
         self.declare(Fact(diagnostico=doenca, porcentagem=round(porcentagem, 2)))
 
-# Carregar os fatos sobre doenças e seus sintomas a partir de um arquivo CSV
-def carregar_fatos(caminho):
-    fatos = {}
-    sintomas_criticos = {}
-    with open(caminho, newline='', encoding='utf-8') as csvfile:
-        reader = csv.reader(csvfile)
-        next(reader)  # Pular o cabeçalho
-        for row in reader:
-            doenca, sintomas_str, sintoma_critico = row
-            sintomas = [s.strip() for s in sintomas_str.split(';')]
-            fatos[doenca] = sintomas
-            sintomas_criticos[doenca] = [sintoma_critico.strip()]
-    return fatos, sintomas_criticos
-
-# Inicializar o Flask app
-app = Flask(__name__)
-
-# Carregar fatos do dataset
-fatos, sintomas_criticos = carregar_fatos(CAMINHO_CSV)
-
-# Criar uma lista de sintomas para o formulário
-todos_sintomas = sorted({sintoma for sintomas in fatos.values() for sintoma in sintomas})
+# Rotas do Flask
 
 @app.route('/')
 def index():
-    return render_template('index.html', todos_sintomas=todos_sintomas)
+    # Página inicial com opções para o usuário
+    return render_template('index.html')
 
-@app.route('/diagnostico', methods=['POST'])
-def diagnostico():
+@app.route('/diagnostico_por_sintomas')
+def diagnostico_por_sintomas():
+    # Página para selecionar os sintomas
+    return render_template('diagnostico_por_sintomas.html', todos_sintomas=todos_sintomas)
+
+@app.route('/resultado_diagnostico', methods=['POST'])
+def resultado_diagnostico():
     sintomas_usuario = request.form.getlist('sintomas')
     
     # Criar e rodar o motor especialista
@@ -89,15 +97,69 @@ def diagnostico():
             porcentagem = fact['porcentagem']
             diagnosticos.append((doenca, porcentagem))
     
-    # Ordenar os diagnósticos pela porcentagem de forma decrescente
-    diagnosticos = sorted(diagnosticos, key=lambda x: x[1], reverse=True)
+    # Ordenar os diagnósticos pela porcentagem de forma decrescente e pegar os 3 maiores
+    diagnosticos = sorted(diagnosticos, key=lambda x: x[1], reverse=True)[:3]
     
     if not diagnosticos:
         resultado = "Nenhum diagnóstico encontrado com os sintomas fornecidos."
     else:
         resultado = [f"{doenca}: {int(porcentagem)}%" for doenca, porcentagem in diagnosticos]
     
-    return render_template('resultado.html', resultado=resultado)
+    return render_template('resultado_diagnostico.html', sintomas_usuario=sintomas_usuario, resultado=resultado)
+
+
+@app.route('/engenharia_reversa')
+def engenharia_reversa():
+    # Página para selecionar uma doença conhecida
+    return render_template('engenharia_reversa.html', todas_doencas=todas_doencas)
+
+@app.route('/selecionar_sintomas', methods=['POST'])
+def selecionar_sintomas():
+    # O usuário seleciona uma possível doença
+    doenca_escolhida = request.form.get('doenca')
+    # Pegar os sintomas dessa doença específica
+    sintomas_da_doenca = fatos.get(doenca_escolhida, [])
+    return render_template('selecionar_sintomas.html', doenca=doenca_escolhida, sintomas=sintomas_da_doenca)
+@app.route('/verificar_diagnostico', methods=['POST'])
+def verificar_diagnostico():
+    # Receber a doença escolhida e os sintomas selecionados pelo usuário
+    doenca_escolhida = request.form.get('doenca')
+    sintomas_usuario = request.form.getlist('sintomas')
+
+    # Verificar se a doença escolhida corresponde aos sintomas fornecidos
+    sintomas_reais = set(fatos.get(doenca_escolhida, []))
+    sintomas_fornecidos = set(sintomas_usuario)
+
+    sintomas_corretos = sintomas_fornecidos & sintomas_reais
+    sintomas_faltando = sintomas_reais - sintomas_fornecidos
+    sintomas_adicionais = sintomas_fornecidos - sintomas_reais
+
+    # Mensagem de verificação
+    if sintomas_faltando:
+        resultado = f"Parece que você não mencionou alguns sintomas importantes para {doenca_escolhida}: {', '.join(sintomas_faltando)}."
+    elif sintomas_adicionais:
+        resultado = f"Os sintomas fornecidos indicam uma possibilidade de outra condição, além de {doenca_escolhida}. Sintomas adicionais: {', '.join(sintomas_adicionais)}."
+    else:
+        resultado = f"Os sintomas fornecidos correspondem totalmente aos sintomas conhecidos de {doenca_escolhida}."
+
+        # Se os sintomas correspondem exatamente, não mostrar outras doenças possíveis
+        return render_template('resultado_verificacao.html', resultado=resultado)
+
+    # Encontrar outras possíveis doenças que correspondam aos sintomas fornecidos
+    possiveis_doencas = []
+    for doenca, sintomas in fatos.items():
+        if doenca != doenca_escolhida:  # Ignorar a doença já escolhida pelo usuário
+            sintomas_comuns = sintomas_fornecidos & set(sintomas)
+            if len(sintomas_comuns) > 0:
+                porcentagem = (len(sintomas_comuns) / len(sintomas)) * 100
+                possiveis_doencas.append((doenca, round(porcentagem, 2)))
+
+    # Ordenar por porcentagem de sintomas coincidentes e pegar até 3 doenças
+    possiveis_doencas = sorted(possiveis_doencas, key=lambda x: x[1], reverse=True)[:3]
+
+    return render_template('resultado_verificacao.html', resultado=resultado, possiveis_doencas=possiveis_doencas)
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)

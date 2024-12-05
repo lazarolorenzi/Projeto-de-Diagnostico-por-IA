@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Resultado do Diagnóstico</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <h4 class="text-center">Resultado do Diagnóstico</h4>
+
+        <div class="mt-4">
+            <h5>Sintomas Selecionados:</h5>
+            <ul class="list-group">
+                {% for sintoma in sintomas_usuario %}
+                    <li class="list-group-item">{{ sintoma }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="mt-4">
+            <h5>Diagnóstico Possível:</h5>
+            {% if resultado is string %}
+                <p class="text-center">{{ resultado }}</p>
+            {% else %}
+                <ul class="list-group mt-3">
+                    {% for item in resultado %}
+                        <li class="list-group-item">{{ item }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <div class="text-center mt-3">
+            <a href="/" class="btn btn-secondary">Voltar ao Início</a>
+        </div>
+    </div>
+</body>
+</html>
