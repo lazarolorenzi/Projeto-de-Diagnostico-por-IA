@@ -1,0 +1,4 @@
+Flask==2.1.1
+experta==1.9.4
+bootstrap-flask==1.5.3
+Werkzeug==2.1.1 #componente do flaks para o roteamento
