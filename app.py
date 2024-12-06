@@ -3,7 +3,7 @@ from experta import *
 from flask import Flask, render_template, request
 
 # Definindo o caminho do dataset, na hora que for testar mude para o seu caminho do dataset coloque o caminho desda raiz, algumas vezes ele n encontra se colocar de forma simples !! exp CAMINHO_CSV = 'dataset_sintomas.csv'
-CAMINHO_CSV = 'E:\IA especialista para Sintomas\Projeto-de-Diagnostico\dataset_sintomas.csv'
+CAMINHO_CSV = 'D:\Projeto-de-Diagnostico-por-IA\dataset_sintomas.csv'
 
 # Carregar os fatos sobre doenças e sintomas do CSV
 def carregar_fatos(caminho):
@@ -107,7 +107,6 @@ def resultado_diagnostico():
     
     return render_template('resultado_diagnostico.html', sintomas_usuario=sintomas_usuario, resultado=resultado)
 
-
 @app.route('/engenharia_reversa')
 def engenharia_reversa():
     # Página para selecionar uma doença conhecida
@@ -120,6 +119,7 @@ def selecionar_sintomas():
     # Pegar os sintomas dessa doença específica
     sintomas_da_doenca = fatos.get(doenca_escolhida, [])
     return render_template('selecionar_sintomas.html', doenca=doenca_escolhida, sintomas=sintomas_da_doenca)
+
 @app.route('/verificar_diagnostico', methods=['POST'])
 def verificar_diagnostico():
     # Receber a doença escolhida e os sintomas selecionados pelo usuário
@@ -131,19 +131,23 @@ def verificar_diagnostico():
     sintomas_fornecidos = set(sintomas_usuario)
 
     sintomas_corretos = sintomas_fornecidos & sintomas_reais
+    porcentagem = (len(sintomas_corretos) / len(sintomas_reais)) * 100 if sintomas_reais else 0
+    porcentagem = round(porcentagem, 2)
+
+    # Mensagem de verificação
+    if sintomas_fornecidos == sintomas_reais:
+        resultado = f"Os sintomas fornecidos correspondem totalmente aos sintomas conhecidos de {doenca_escolhida}. Probabilidade de ser esta doença: {porcentagem}%."
+        # Se os sintomas correspondem exatamente, não mostrar outras doenças possíveis
+        return render_template('resultado_verificacao.html', resultado=resultado)
+
+    # Mostrar sintomas faltando ou adicionais
     sintomas_faltando = sintomas_reais - sintomas_fornecidos
     sintomas_adicionais = sintomas_fornecidos - sintomas_reais
 
-    # Mensagem de verificação
     if sintomas_faltando:
-        resultado = f"Parece que você não mencionou alguns sintomas importantes para {doenca_escolhida}: {', '.join(sintomas_faltando)}."
+        resultado = f"Parece que você não mencionou alguns sintomas importantes para {doenca_escolhida}: {', '.join(sintomas_faltando)}. Probabilidade de ser esta doença: {porcentagem}%."
     elif sintomas_adicionais:
-        resultado = f"Os sintomas fornecidos indicam uma possibilidade de outra condição, além de {doenca_escolhida}. Sintomas adicionais: {', '.join(sintomas_adicionais)}."
-    else:
-        resultado = f"Os sintomas fornecidos correspondem totalmente aos sintomas conhecidos de {doenca_escolhida}."
-
-        # Se os sintomas correspondem exatamente, não mostrar outras doenças possíveis
-        return render_template('resultado_verificacao.html', resultado=resultado)
+        resultado = f"Os sintomas fornecidos indicam uma possibilidade de outra condição, além de {doenca_escolhida}. Sintomas adicionais: {', '.join(sintomas_adicionais)}. Probabilidade de ser esta doença: {porcentagem}%."
 
     # Encontrar outras possíveis doenças que correspondam aos sintomas fornecidos
     possiveis_doencas = []
@@ -151,15 +155,14 @@ def verificar_diagnostico():
         if doenca != doenca_escolhida:  # Ignorar a doença já escolhida pelo usuário
             sintomas_comuns = sintomas_fornecidos & set(sintomas)
             if len(sintomas_comuns) > 0:
-                porcentagem = (len(sintomas_comuns) / len(sintomas)) * 100
-                possiveis_doencas.append((doenca, round(porcentagem, 2)))
+                outra_porcentagem = (len(sintomas_comuns) / len(sintomas)) * 100
+                possiveis_doencas.append((doenca, round(outra_porcentagem, 2)))
 
     # Ordenar por porcentagem de sintomas coincidentes e pegar até 3 doenças
     possiveis_doencas = sorted(possiveis_doencas, key=lambda x: x[1], reverse=True)[:3]
 
     return render_template('resultado_verificacao.html', resultado=resultado, possiveis_doencas=possiveis_doencas)
 
-
-
 if __name__ == "__main__":
     app.run(debug=True)
+    
